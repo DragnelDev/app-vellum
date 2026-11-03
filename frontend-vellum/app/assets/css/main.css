@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+/* Paleta basada en variables: las preferencias del lector las modifican en vivo */
+:root {
+  --v-bg: #0f172a;
+  --v-accent: #f59e0b;
+  --v-fg: #e2e8f0;
+  --v-muted: #94a3b8;
+  --v-on-accent: #0f172a;
+  --v-mix: white; /* color con el que se aclara/oscurece el fondo para superficies */
+}
+:root[data-tema='claro'] {
+  --v-fg: #0f172a;
+  --v-muted: #475569;
+  --v-mix: black;
+}
+
+@theme inline {
+  --color-bg: var(--v-bg);
+  --color-fg: var(--v-fg);
+  --color-muted: var(--v-muted);
+  --color-accent: var(--v-accent);
+  --color-on-accent: var(--v-on-accent);
+  --color-surface: color-mix(in srgb, var(--v-bg), var(--v-mix) 6%);
+  --color-surface-2: color-mix(in srgb, var(--v-bg), var(--v-mix) 12%);
+  --color-line: color-mix(in srgb, var(--v-bg), var(--v-mix) 18%);
+  --font-display: ui-serif, 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+}
+
+html { background: var(--v-bg); color: var(--v-fg); -webkit-tap-highlight-color: transparent; }
+body { min-height: 100dvh; font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+::selection { background: color-mix(in srgb, var(--v-accent), transparent 60%); }
+
+@utility btn { @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition active:scale-[.98] disabled:opacity-50 disabled:pointer-events-none; }
+.btn-primary { @apply btn bg-accent text-on-accent hover:brightness-110; }
+.btn-ghost { @apply btn bg-surface-2 text-fg hover:brightness-125; }
+.input { @apply w-full rounded-lg border border-line bg-surface px-3.5 py-2.5 text-sm text-fg placeholder:text-muted outline-none focus:border-accent; }
+.chip { @apply inline-flex items-center rounded-full border border-line px-3 py-1 text-xs text-muted transition; }
+.chip[aria-pressed='true'] { @apply border-accent text-accent; background: color-mix(in srgb, var(--v-accent), transparent 90%); }
+.container-v { @apply mx-auto w-full max-w-6xl px-4; }
+
+/* oculta barras de scroll en carruseles horizontales */
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+.spoiler { background: var(--v-fg); color: transparent; border-radius: 4px; cursor: pointer; }
+.spoiler.revealed { background: transparent; color: inherit; }
+
+@media (prefers-reduced-motion: reduce) { * { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
